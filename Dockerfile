@@ -4,7 +4,7 @@ WORKDIR /root
 ENV PROMPT_PREFIX=""
 ARG DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get update \
+RUN mkdir -p /tmp/config && apt-get update \
     && apt-get install -y git curl binutils clang make apt-transport-https gnupg2 unzip software-properties-common \
     && curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - \
     && echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | tee -a /etc/apt/sources.list.d/kubernetes.list \
@@ -24,9 +24,11 @@ RUN curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -
 
 RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/v1.1.1/zsh-in-docker.sh)" && \
     git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k && \
-    echo 'source ~/powerlevel10k/powerlevel10k.zsh-theme' >>~/.zshrc
+    echo 'source ~/powerlevel10k/powerlevel10k.zsh-theme' >>~/.zshrc \
+    && mkdir -p /profile_copy && cp -R . /profile_copy
 
-ADD config/.zshrc /root/.zshrc
-ADD config/.p10k.zsh /root/.p10k.zsh
+ADD config/ /tmp/config/
+ADD scripts/ /tmp/scripts/
 
+ENTRYPOINT /tmp/scripts/entrypoint.sh
 CMD zsh
