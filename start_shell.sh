@@ -14,7 +14,7 @@ if [ ! "$(docker ps -q -f name="$docker_container_name")" ]; then
     fi
 
     mkdir -p ${shell_path}
-    docker run -itd -e PROMPT_PREFIX=${name_upper} -v ${shell_path}:/root --name "$docker_container_name" shell zsh
+    docker run -itd -e PROMPT_PREFIX=${name_upper} -v /var/run/docker.sock:/var/run/docker.sock -v ${shell_path}:/root --name "$docker_container_name" shell zsh
 fi
 
 docker exec -it "$docker_container_name" zsh

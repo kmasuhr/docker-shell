@@ -13,8 +13,8 @@ RUN mkdir -p /tmp/config && apt-get update \
     && curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add - \
     && add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" \
     && curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" \
-    && unzip awscliv2.zip && ./aws/install \
-    && apt-get update && apt-get install -y wget nano htop fzf tldr jq bat kubectl terraform docker-ce docker-ce-cli containerd.io
+    && unzip awscliv2.zip && ./aws/install && rm awscliv2.zip && rm -rf aws \
+    && apt-get update && apt-get install -y wget nano htop tldr jq bat kubectl terraform docker-ce docker-ce-cli containerd.io
 
 RUN curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl" \
     && chmod +x ./kubectl && mv ./kubectl /usr/local/bin/kubectl \
@@ -22,9 +22,11 @@ RUN curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -
     && chmod +x ./kubectx ./kubens && mv ./kubectx /usr/local/bin/kubectx && mv ./kubens /usr/local/bin/kubens \
     && curl -sL https://aka.ms/InstallAzureCLIDeb | bash
 
-RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/v1.1.1/zsh-in-docker.sh)" && \
-    git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k && \
-    echo 'source ~/powerlevel10k/powerlevel10k.zsh-theme' >>~/.zshrc \
+RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/v1.1.1/zsh-in-docker.sh)" \
+    && git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k \
+    && echo 'source ~/powerlevel10k/powerlevel10k.zsh-theme' >>~/.zshrc \
+    && git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install \
+    && git clone https://github.com/zsh-users/zsh-syntax-highlighting.git \
     && mkdir -p /profile_copy && cp -R . /profile_copy
 
 ADD config/ /tmp/config/

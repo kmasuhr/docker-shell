@@ -9,30 +9,28 @@ export LANG='en_US.UTF-8'
 export LANGUAGE='en_US:en'
 export LC_ALL='en_US.UTF-8'
 export TERM=xterm-256color
+export FZF_DEFAULT_OPTS="--bind='ctrl-o:execute(nano {})+abort'"
 
-##### Zsh/Oh-my-Zsh Configuration
 export ZSH="/root/.oh-my-zsh"
 
 ZSH_THEME="powerlevel10k/powerlevel10k"
 plugins=(
     git
+    kubectl
+    terraform
 )
-
 
 source $ZSH/oh-my-zsh.sh
 source ~/powerlevel10k/powerlevel10k.zsh-theme
+source /root/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 alias cat="batcat"
 alias top="htop"
 alias k="kubectl"
 alias gs="git status"
 alias tf="terraform"
-# alias bfg="java -jar /Users/karol.masuhr/Applications/bfg-1.13.0.jar"
+alias preview="fzf --preview 'cat {}'"
 
-alias preview="fzf --preview 'bat --color \"always\" {}'"
-export FZF_DEFAULT_OPTS="--bind='ctrl-o:execute(nano {})+abort'"
-
-export PATH="/home/linuxbrew/.linuxbrew/bin:${PATH}"
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f ~/.custom.zsh ] && source ~/.custom.zsh
