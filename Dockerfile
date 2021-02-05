@@ -14,7 +14,10 @@ RUN mkdir -p /tmp/config && apt-get update \
     && add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" \
     && curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" \
     && unzip awscliv2.zip && ./aws/install && rm awscliv2.zip && rm -rf aws \
-    && apt-get update && apt-get install -y wget nano htop tldr jq bat kubectl terraform docker-ce docker-ce-cli containerd.io
+    && apt-get update && apt-get install -y wget nano htop tldr jq bat kubectl terraform docker-ce docker-ce-cli containerd.io \
+    && curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash \
+    && export NVM_DIR="$HOME/.nvm" && echo $NVM_DIR \
+    && . $NVM_DIR/nvm.sh
 
 RUN curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl" \
     && chmod +x ./kubectl && mv ./kubectl /usr/local/bin/kubectl \
@@ -34,3 +37,10 @@ ADD scripts/ /tmp/scripts/
 
 ENTRYPOINT /tmp/scripts/entrypoint.sh
 CMD zsh
+
+#RUN . "$NVM_DIR/nvm.sh" && nvm install ${NODE_VERSION}
+#RUN . "$NVM_DIR/nvm.sh" && nvm use v${NODE_VERSION}
+#RUN . "$NVM_DIR/nvm.sh" && nvm alias default v${NODE_VERSION}
+#ENV PATH="/root/.nvm/versions/node/v${NODE_VERSION}/bin/:${PATH}"
+#RUN node --version
+#RUN npm --version

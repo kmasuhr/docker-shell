@@ -10,6 +10,7 @@ export LANGUAGE='en_US:en'
 export LC_ALL='en_US.UTF-8'
 export TERM=xterm-256color
 export FZF_DEFAULT_OPTS="--bind='ctrl-o:execute(nano {})+abort'"
+export NVM_DIR="$HOME/.nvm"
 
 export ZSH="/root/.oh-my-zsh"
 
@@ -34,3 +35,5 @@ alias preview="fzf --preview 'cat {}'"
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f ~/.custom.zsh ] && source ~/.custom.zsh
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

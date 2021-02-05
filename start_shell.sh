@@ -6,6 +6,7 @@ name_upper=$(echo $name | tr a-z A-Z)
 
 docker_container_name="shell_${name_lower}"
 
+# create work_shell folder in user directory
 shell_path="/Users/karol.masuhr/work_shell/${name_lower}"
 
 if [ ! "$(docker ps -q -f name="$docker_container_name")" ]; then
