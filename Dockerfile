@@ -28,7 +28,9 @@ RUN curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -
     && chmod +x ./kubectl && mv ./kubectl /usr/local/bin/kubectl \
     && curl -LO "https://github.com/ahmetb/kubectx/releases/download/v0.9.1/kubectx" && curl -LO "https://github.com/ahmetb/kubectx/releases/download/v0.9.1/kubens" \
     && chmod +x ./kubectx ./kubens && mv ./kubectx /usr/local/bin/kubectx && mv ./kubens /usr/local/bin/kubens \
-    && curl -sL https://aka.ms/InstallAzureCLIDeb | bash
+    && curl -sL https://aka.ms/InstallAzureCLIDeb | bash \
+    && curl -LO "https://releases.hashicorp.com/packer/1.7.0/packer_1.7.0_linux_amd64.zip" \
+    && unzip packer_1.7.0_linux_amd64.zip && mv ./packer /usr/local/bin/packer
 
 RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/v1.1.1/zsh-in-docker.sh)" \
     && git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k \
