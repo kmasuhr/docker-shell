@@ -14,7 +14,7 @@ RUN mkdir -p /tmp/config && apt-get update \
     && add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" \
     && curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" \
     && unzip awscliv2.zip && ./aws/install && rm awscliv2.zip && rm -rf aws \
-    && apt-get update && apt-get install -y wget nano htop tldr jq bat kubectl terraform docker-ce docker-ce-cli containerd.io \
+    && apt-get update && apt-get install -y wget nano htop tldr jq bat kubectl docker-ce docker-ce-cli containerd.io \
     && curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash \
     && export NVM_DIR="$HOME/.nvm" && echo $NVM_DIR \
     && . $NVM_DIR/nvm.sh \
@@ -37,7 +37,9 @@ RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/
     && echo 'source ~/powerlevel10k/powerlevel10k.zsh-theme' >>~/.zshrc \
     && git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install \
     && git clone https://github.com/zsh-users/zsh-syntax-highlighting.git \
-    && mkdir -p /profile_copy && cp -R . /profile_copy
+    && mkdir -p /profile_copy && cp -R . /profile_copy \
+    && curl -L https://raw.githubusercontent.com/warrensbox/terraform-switcher/release/install.sh | bash \
+    && curl -L https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
 
 ADD config/ /tmp/config/
 ADD scripts/ /tmp/scripts/
