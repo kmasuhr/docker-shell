@@ -30,6 +30,7 @@ alias top="htop"
 alias k="kubectl"
 alias gs="git status"
 alias tf="terraform"
+alias tg="terragrunt"
 alias preview="fzf --preview 'cat {}'"
 
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

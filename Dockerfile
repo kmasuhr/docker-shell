@@ -40,8 +40,11 @@ RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/
     && mkdir -p /profile_copy && cp -R . /profile_copy \
     && curl -L https://raw.githubusercontent.com/warrensbox/terraform-switcher/release/install.sh | bash \
     && curl -L https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash \
-    && wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.29.5/terragrunt_linux_arm64 -O terragrunt \
+    && wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.31.0/terragrunt_linux_arm64 -O terragrunt \
     && chmod +x terragrunt && mv ./terragrunt /usr/local/bin/terragrunt \
+    && wget https://github.com/vmware-tanzu/velero/releases/download/v1.6.1/velero-v1.6.1-linux-amd64.tar.gz \
+    && tar -xvzf velero-v1.6.1-linux-amd64.tar.gz && chmod +x velero-v1.6.1-linux-amd64/velero \
+    && mv velero-v1.6.1-linux-amd64/velero /usr/local/bin/velero && rm -rf velero-v1.6.1-linux-amd64 \
     && wget https://github.com/derailed/k9s/releases/download/v0.24.10/k9s_v0.24.10_Linux_x86_64.tar.gz -O k9s.tar.gz \
     && mkdir k9s_out && tar -xzvf k9s.tar.gz -C ./k9s_out && mv ./k9s_out/k9s /usr/local/bin/k9s && rm -rf k9s_out && rm -rf k9s.tar.gz
 
