@@ -25,6 +25,7 @@ source $ZSH/oh-my-zsh.sh
 source ~/powerlevel10k/powerlevel10k.zsh-theme
 source /root/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
+alias python="python3"
 alias cat="batcat"
 alias top="htop"
 alias k="kubectl"
