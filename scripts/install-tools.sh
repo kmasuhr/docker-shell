@@ -14,6 +14,7 @@ ANSIBLE_VERSION=2.10.15
 PEXPECT_VERSION=4.8.0
 VIRTUALENV_VERSION=20.8.1
 YAMLLINT_VERSION=1.26.3
+ARGOCD_VERSION=2.1.3
 
 export DEBIAN_FRONTEND=noninteractive
 echo "APT::Get::Assume-Yes \"true\";" > /etc/apt/apt.conf.d/90assumeyes
@@ -73,6 +74,10 @@ chmod +x "velero-v${VELERO_VERSION}-linux-amd64/velero"
 mv "velero-v${VELERO_VERSION}-linux-amd64/velero" /usr/local/bin/velero
 rm -rf "velero-v${VELERO_VERSION}-linux-amd64"
 
+# Install argo cli
+wget "https://github.com/argoproj/argo-cd/releases/download/v${ARGOCD_VERSION}/argocd-linux-amd64"
+chmod +x "argocd-linux-amd64" && mv argocd-linux-amd64 /usr/local/bin/argocd
+
 # Download and install Kubectl
 curl -sLk "https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl" \
       -o /usr/local/bin/kubectl && \
@@ -84,7 +89,7 @@ curl -LO "https://github.com/ahmetb/kubectx/releases/download/v${KUBECTX_VERSION
 chmod +x ./kubectx ./kubens && mv ./kubectx /usr/local/bin/kubectx && mv ./kubens /usr/local/bin/kubens \
 
 # Install K9S
-wget "https://github.com/derailed/k9s/releases/download/v${K9S_VERSION}/k9s_v${K9S_VERSION}_Linux_x86_64.tar.gz" -O k9s.tar.gz
+wget "https://github.com/derailed/k9s/releases/download/v${K9S_VERSION}/k9s_Linux_x86_64.tar.gz" -O k9s.tar.gz
 mkdir k9s_out && tar -xzvf k9s.tar.gz -C ./k9s_out && mv ./k9s_out/k9s /usr/local/bin/k9s
 rm -rf k9s_out && rm -rf k9s.tar.gz
 
