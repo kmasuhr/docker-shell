@@ -14,6 +14,8 @@ export NVM_DIR="$HOME/.nvm"
 
 export ZSH="/root/.oh-my-zsh"
 
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+
 ZSH_THEME="powerlevel10k/powerlevel10k"
 plugins=(
     git

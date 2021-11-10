@@ -15,6 +15,7 @@ PEXPECT_VERSION=4.8.0
 VIRTUALENV_VERSION=20.8.1
 YAMLLINT_VERSION=1.26.3
 ARGOCD_VERSION=2.1.3
+ISTIO_VERSION=1.10.5
 
 export DEBIAN_FRONTEND=noninteractive
 echo "APT::Get::Assume-Yes \"true\";" > /etc/apt/apt.conf.d/90assumeyes
@@ -114,3 +115,27 @@ pip3 --no-cache-dir install -r https://raw.githubusercontent.com/ansible-collect
 && pip3 --no-cache-dir install azure-cli==${AZURE_CLI_VERSION} \
 && deactivate \
 && ln -s /opt/azure-cli/bin/az /usr/local/bin/az
+
+# Install istioctl
+curl -L https://istio.io/downloadIstio | ISTIO_VERSION=$ISTIO_VERSION sh -
+mv istio-* istio_bin
+mv istio_bin/bin/istioctl /usr/local/bin/istioctl
+rm -rf istio_bin && rm -rf istio*.tar.gz
+
+# Install Krew
+(
+  set -x; cd "$(mktemp -d)" &&
+  OS="$(uname | tr '[:upper:]' '[:lower:]')" &&
+  ARCH="$(uname -m | sed -e 's/x86_64/amd64/' -e 's/\(arm\)\(64\)\?.*/\1\2/' -e 's/aarch64$/arm64/')" &&
+  KREW="krew-${OS}_${ARCH}" &&
+  curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/latest/download/${KREW}.tar.gz" &&
+  tar zxvf "${KREW}.tar.gz" &&
+  ./"${KREW}" install krew
+)
+PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+
+# Install kubectl plugins
+kubectl krew install exec-as
+kubectl krew install prompt
+kubectl krew install ctx
+kubectl krew install ns
