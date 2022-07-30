@@ -2,21 +2,39 @@
 
 set -e
 
-TERRAFORM_VERSION=1.0.9
-TERRAGRUNT_VERSION=0.35.3
-VELERO_VERSION=1.7.0
-K9S_VERSION=0.24.15
-PACKER_VERSION=1.7.6
-HELM_VERSION=3.7.0
-KUBECTL_VERSION=1.21.2
+# https://github.com/hashicorp/terraform/releases
+TERRAFORM_VERSION=1.2.2
+
+# https://github.com/gruntwork-io/terragrunt/releases
+TERRAGRUNT_VERSION=0.37.3
+
+# https://github.com/vmware-tanzu/velero/releases
+VELERO_VERSION=1.8.1
+
+# https://github.com/derailed/k9s/releases
+K9S_VERSION=0.25.18
+
+# https://github.com/hashicorp/packer/releases
+PACKER_VERSION=1.8.1
+
+# https://github.com/helm/helm/releases
+HELM_VERSION=3.9.0
+
+# https://dl.k8s.io/release/stable.txt
+KUBECTL_VERSION=1.24.1
+
+# https://github.com/ahmetb/kubectx/releases
 KUBECTX_VERSION=0.9.4
-AZURE_CLI_VERSION=2.29.0
+
+# https://github.com/Azure/azure-cli/releases
+AZURE_CLI_VERSION=2.37.0
+
 ANSIBLE_AZURE_COLLECTION_VERSION=1.9.0
 ANSIBLE_VERSION=2.10.15
 PEXPECT_VERSION=4.8.0
 VIRTUALENV_VERSION=20.8.1
 YAMLLINT_VERSION=1.26.3
-ARGOCD_VERSION=2.1.3
+ARGOCD_VERSION=2.4.0
 ISTIO_VERSION=1.10.5
 
 export DEBIAN_FRONTEND=noninteractive
@@ -77,8 +95,8 @@ mv "velero-v${VELERO_VERSION}-linux-arm64/velero" /usr/local/bin/velero
 rm -rf "velero-v${VELERO_VERSION}-linux-arm64"
 
 ## Install argo cli
-#wget "https://github.com/argoproj/argo-cd/releases/download/v${ARGOCD_VERSION}/argocd-linux-arm64"
-#chmod +x "argocd-linux-arm64" && mv argocd-linux-arm64 /usr/local/bin/argocd
+wget "https://github.com/argoproj/argo-cd/releases/download/v${ARGOCD_VERSION}/argocd-linux-arm64"
+chmod +x "argocd-linux-arm64" && mv argocd-linux-arm64 /usr/local/bin/argocd
 
 # Download and install Kubectl
 curl -sLk "https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/linux/arm64/kubectl" \
